@@ -1,5 +1,5 @@
 export default async (req, context) => {
-  console.log(context.geo.city + " / " + context.ip + " / " + req.headers.get("User-Agent"));
+  console.log(req.url + " from " + context.geo.city + " / " + context.ip + " with " + req.headers.get("User-Agent"));
   return new URL(req.url);
 };
 

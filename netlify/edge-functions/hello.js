@@ -5,4 +5,4 @@ export default async (req, context) => {
   });
 };
 
-export const config = { path: "/" };
+export const config = { path: "/*" };

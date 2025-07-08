@@ -3,4 +3,4 @@ export default async (req, context) => {
   return new URL(req.url);
 };
 
-export const config = { path: "/*" };
+export const config = { path: "/impressum" };

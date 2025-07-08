@@ -1,15 +1,8 @@
-export default async (request: Request, context: Context) => {
-  const url = new URL(request.url);
+export default async (req: Request) => {
+  //const url = new URL("/welcome", req.url);
+  //const res = await fetch(url);
+  //return someTransformationFunction(res);
+  console.log("hallo");
+};
 
-  // Look for the query parameter, and return if we don't find it
-  if (url.searchParams.get("method") !== "transform") {
-    return;
-  }
-
-  const response = await context.next();
-  const text = await response.text();
-
-  return new Response(text.toUpperCase(), response);
-}
-
-export const config = { path: "/test" };
+export const config = { path: "/hello" };

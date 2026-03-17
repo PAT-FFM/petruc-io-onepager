@@ -96,6 +96,7 @@ footer a{
   display: inline-block;
   position: relative;
   width: 200px;
+  margin: 4px 0px;
   border-radius: 6px;
   overflow: hidden;
   text-decoration: none;

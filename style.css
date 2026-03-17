@@ -91,3 +91,34 @@ footer a{
   font-size: 0.875rem;
   color: #aaa;
 }
+
+.yt-thumb {
+  display: inline-block;
+  position: relative;
+  margin-top: 1.5rem;
+  width: 240px;
+  border-radius: 6px;
+  overflow: hidden;
+  text-decoration: none;
+}
+.yt-thumb img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.yt-thumb:hover .yt-play circle {
+  fill: rgba(0,0,0,0.75);
+}
+.yt-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+}
+.yt-label {
+  margin-top: 0.4rem !important;
+  font-size: 0.75rem !important;
+  color: #888;
+}

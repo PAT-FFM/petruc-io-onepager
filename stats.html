@@ -45,10 +45,10 @@
         <tr><th>Stadt</th><th>Land</th><th>#</th></tr>
       </table>
     </div>
-    <div class="card" style="grid-column: span 2">
+    <div class="card" style="grid-column: span 4">
       <h2>Letzte Besuche</h2>
       <table id="recent">
-        <tr><th>Zeit</th><th>URL</th><th>Stadt</th><th>Land</th></tr>
+        <tr><th>Zeit</th><th>URL</th><th>Stadt</th><th>Land</th><th>Agent</th></tr>
       </table>
     </div>
   </div>
@@ -102,7 +102,7 @@
         const time = new Date(r.visited_at).toLocaleString("de-DE");
         const path = new URL(r.url).pathname;
         tr.innerHTML = `<td>${time}</td><td class="url">${path}</td>
-                        <td>${r.city || "–"}</td><td>${r.country || "–"}</td>`;
+                        <td>${r.city || "–"}</td><td>${r.country || "–"}</td>${r.agent || "–"}<td></td>`;
       });
     }
 

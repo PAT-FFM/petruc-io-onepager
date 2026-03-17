@@ -35,7 +35,7 @@ export default async (req, context) => {
       }),
 
       // Letzte 20 Besuche
-      fetch(`${supabaseUrl}/rest/v1/visits?select=visited_at,url,city,country&order=visited_at.desc&limit=20`, {
+      fetch(`${supabaseUrl}/rest/v1/visits?select=visited_at,url,city,country,user_agent&order=visited_at.desc&limit=20`, {
         headers: { "apikey": supabaseKey }
       }),
     ]);

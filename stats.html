@@ -102,7 +102,7 @@
         const time = new Date(r.visited_at).toLocaleString("de-DE");
         const path = new URL(r.url).pathname;
         tr.innerHTML = `<td>${time}</td><td class="url">${path}</td>
-                        <td>${r.city || "–"}</td><td>${r.country || "–"}</td>${r.user_agent || "–"}<td></td>`;
+                        <td>${r.city || "–"}</td><td>${r.country || "–"}</td><td><small>${r.user_agent || "–"}</small></td>`;
       });
     }
 

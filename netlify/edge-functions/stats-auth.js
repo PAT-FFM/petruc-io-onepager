@@ -2,7 +2,9 @@ const PASSWORD = Netlify.env.get("STATS_PASSWORD");
 
 export default async (req, context) => {
   const supabaseUrl = Netlify.env.get("SUPABASE_URL");
-  const supabaseKey = Netlify.env.get("SUPABASE_ANON_KEY");
+  const supabaseLegacyKey = Netlify.env.get("SUPABASE_ANON_KEY");
+  const supabasePublishableKey = Netlify.env.get("SUPABASE_PUBLISHABLE_KEY");
+  const supabaseKey = supabasePublishableKey;
   const url = new URL(req.url);
 
   // API-Endpunkt: /stats/data

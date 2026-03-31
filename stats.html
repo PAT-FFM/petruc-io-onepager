@@ -129,7 +129,7 @@
       <table id="german">
         <tr>
           <th>Stadt</th>
-          <th>User-Agent</th>
+          <th>Agent</th>
           <th>#</th>
         </tr>
       </table>
@@ -198,7 +198,7 @@
       const germanTable = document.getElementById("german");
       german.forEach(g => {
         const tr = germanTable.insertRow();
-        tr.innerHTML = `<td>${g.city || "–"}</td><td>${g.user_agent || "–"}</td><td>${g.count}</td>`;
+        tr.innerHTML = `<td>${g.city || "–"}</td><td><small>${g.user_agent || "–"}</small></td><td>${g.count}</td>`;
       });
 
       // Letzte Besuche

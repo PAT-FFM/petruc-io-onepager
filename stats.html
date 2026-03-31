@@ -1,33 +1,108 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stats – petruc.io</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-           background: #f5f5f5; color: #333; padding: 2rem; }
-    h1 { font-size: 1.4rem; margin-bottom: 1.5rem; color: #111; }
-    h1 span { font-weight: 300; color: #888; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-    .card { background: white; border-radius: 8px; padding: 1.5rem;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-    .card h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;
-               color: #888; margin-bottom: 1rem; }
-    .total { font-size: 3rem; font-weight: 700; color: #111; }
-    .chart-wrap { position: relative; height: 200px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    th { text-align: left; padding: 0.4rem 0.5rem; color: #888;
-         border-bottom: 1px solid #eee; font-weight: 500; }
-    td { padding: 0.4rem 0.5rem; border-bottom: 1px solid #f0f0f0; }
-    tr:last-child td { border-bottom: none; }
-    .url { color: #888; font-size: 0.8rem; }
-    #logout { float: right; font-size: 0.8rem; color: #aaa; cursor: pointer;
-              text-decoration: underline; background: none; border: none; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      color: #111;
+    }
+
+    h1 span {
+      font-weight: 300;
+      color: #888;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    .card h2 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #888;
+      margin-bottom: 1rem;
+    }
+
+    .total {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .chart-wrap {
+      position: relative;
+      height: 200px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    th {
+      text-align: left;
+      padding: 0.4rem 0.5rem;
+      color: #888;
+      border-bottom: 1px solid #eee;
+      font-weight: 500;
+    }
+
+    td {
+      padding: 0.4rem 0.5rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .url {
+      color: #888;
+      font-size: 0.8rem;
+    }
+
+    #logout {
+      float: right;
+      font-size: 0.8rem;
+      color: #aaa;
+      cursor: pointer;
+      text-decoration: underline;
+      background: none;
+      border: none;
+    }
   </style>
 </head>
+
 <body>
   <h1>petruc.io <span>· Stats</span> <button id="logout" onclick="logout()">Logout</button></h1>
   <div class="grid">
@@ -35,20 +110,40 @@
       <h2>Besuche gesamt</h2>
       <div class="total" id="total">–</div>
     </div>
-    <div class="card" style="grid-column: span 2">
+    <div class="card" style="grid-column: span 3">
       <h2>Besuche pro Tag (letzte 30 Tage)</h2>
       <div class="chart-wrap"><canvas id="chart"></canvas></div>
     </div>
     <div class="card">
       <h2>Top Städte</h2>
       <table id="cities">
-        <tr><th>Stadt</th><th>Land</th><th>#</th></tr>
+        <tr>
+          <th>Stadt</th>
+          <th>Land</th>
+          <th>#</th>
+        </tr>
+      </table>
+    </div>
+    <div class="card" style="grid-column: span 3">
+      <h2>Besucher aus Deutschland</h2>
+      <table id="german">
+        <tr>
+          <th>Stadt</th>
+          <th>User-Agent</th>
+          <th>#</th>
+        </tr>
       </table>
     </div>
     <div class="card" style="grid-column: span 4">
       <h2>Letzte Besuche</h2>
       <table id="recent">
-        <tr><th>Zeit</th><th>URL</th><th>Stadt</th><th>Land</th><th>Agent</th></tr>
+        <tr>
+          <th>Zeit</th>
+          <th>URL</th>
+          <th>Stadt</th>
+          <th>Land</th>
+          <th>Agent</th>
+        </tr>
       </table>
     </div>
   </div>
@@ -66,7 +161,7 @@
       const pw = getCookie("stats_auth");
       const res = await fetch("/stats/data", { headers: { "x-stats-auth": pw } });
       if (!res.ok) { location.href = "/stats"; return; }
-      const { total, daily, cities, recent } = await res.json();
+      const { total, daily, cities, german, recent } = await res.json();
 
       // Gesamt
       document.getElementById("total").textContent = total;
@@ -77,14 +172,18 @@
         type: "bar",
         data: {
           labels: daily.map(d => d.day),
-          datasets: [{ data: daily.map(d => d.count), backgroundColor: "#333",
-                       borderRadius: 3, label: "Besuche" }]
+          datasets: [{
+            data: daily.map(d => d.count), backgroundColor: "#333",
+            borderRadius: 3, label: "Besuche"
+          }]
         },
         options: {
           responsive: true, maintainAspectRatio: false,
           plugins: { legend: { display: false } },
-          scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } },
-                    x: { ticks: { maxTicksLimit: 10 } } }
+          scales: {
+            y: { beginAtZero: true, ticks: { stepSize: 1 } },
+            x: { ticks: { maxTicksLimit: 10 } }
+          }
         }
       });
 
@@ -93,6 +192,13 @@
       cities.forEach(c => {
         const tr = citiesTable.insertRow();
         tr.innerHTML = `<td>${c.city || "–"}</td><td>${c.country || "–"}</td><td>${c.count}</td>`;
+      });
+
+      // Besucher aus Deutschland
+      const germanTable = document.getElementById("german");
+      german.forEach(g => {
+        const tr = germanTable.insertRow();
+        tr.innerHTML = `<td>${g.city || "–"}</td><td>${g.user_agent || "–"}</td><td>${g.count}</td>`;
       });
 
       // Letzte Besuche
@@ -109,4 +215,5 @@
     load();
   </script>
 </body>
+
 </html>

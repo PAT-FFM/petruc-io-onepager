@@ -15,7 +15,7 @@ export default async (req, context) => {
     }
 
     // Alle Queries parallel
-    const [totalRes, dailyRes, citiesRes, recentRes] = await Promise.all([
+    const [totalRes, dailyRes, citiesRes, germanRes, recentRes] = await Promise.all([
 
       // Gesamt
       fetch(`${supabaseUrl}/rest/v1/visits?select=count`, {
@@ -36,6 +36,13 @@ export default async (req, context) => {
         body: JSON.stringify({})
       }),
 
+      // Besuche aus Deutschland
+      fetch(`${supabaseUrl}/rest/v1/rpc/german_visits`, {
+        method: "POST",
+        headers: { "apikey": supabaseKey, "Content-Type": "application/json" },
+        body: JSON.stringify({})
+      }),
+
       // Letzte 30 Besuche
       fetch(`${supabaseUrl}/rest/v1/visits?select=visited_at,url,city,country,user_agent&order=visited_at.desc&limit=30`, {
         headers: { "apikey": supabaseKey }
@@ -45,9 +52,10 @@ export default async (req, context) => {
     const total = totalRes.headers.get("content-range")?.split("/")[1] || "0";
     const daily = await dailyRes.json();
     const cities = await citiesRes.json();
+    const german = await germanRes.json();
     const recent = await recentRes.json();
 
-    return new Response(JSON.stringify({ total, daily, cities, recent }), {
+    return new Response(JSON.stringify({ total, daily, cities, german, recent }), {
       headers: { "Content-Type": "application/json" }
     });
   }

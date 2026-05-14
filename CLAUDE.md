@@ -27,7 +27,7 @@ Set in the Netlify dashboard (not in files):
 
 - `STATS_PASSWORD` — password for the `/stats` dashboard
 - `SUPABASE_URL` — Supabase project URL
-- `SUPABASE_PUBLISHABLE_KEY` — Supabase anon/publishable key (used in edge functions)
+- `SUPABASE_SECRET_KEY` — Supabase key (used in edge functions as SERVICE_ROLE)
 
 ## Analytics flow
 

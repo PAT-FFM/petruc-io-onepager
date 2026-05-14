@@ -5,9 +5,7 @@ export default async (req, context) => {
   if (!url.endsWith("/") && !url.endsWith("/impressum")) return;
 
   const supabaseUrl = Netlify.env.get("SUPABASE_URL");
-  const supabaseLegacyKey = Netlify.env.get("SUPABASE_ANON_KEY");
-  const supabasePublishableKey = Netlify.env.get("SUPABASE_PUBLISHABLE_KEY");
-  const supabaseKey = supabasePublishableKey;
+  const supabaseKey = Netlify.env.get("SUPABASE_SECRET_KEY");
   
   // Bots & Crawler ignorieren
   const userAgent = req.headers.get("User-Agent") || "";

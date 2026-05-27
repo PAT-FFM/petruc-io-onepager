@@ -1,0 +1,5 @@
+screenshot*.png
+screenshot*.jpg
+screenshot*.jpeg
+screenshot*.webp
+.playwright-mcp/
